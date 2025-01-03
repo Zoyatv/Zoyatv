@@ -1,6 +1,233 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
+<script>
+(() => {
+    function createDarkBackground() {
+        const backgroundContainer = document.createElement('div');
+        backgroundContainer.className = 'dark-theme-background';
+        document.body.prepend(backgroundContainer);
+
+        // Create glowing orbs
+        const orbColors = [
+            'rgba(255, 105, 180, 0.3)',  // Pink
+            'rgba(159, 122, 234, 0.3)',  // Purple
+            'rgba(138, 75, 255, 0.3)',   // Violet
+            'rgba(114, 137, 218, 0.3)'   // Discord blue
+        ];
+
+        for (let i = 0; i < 8; i++) {
+            const orb = document.createElement('div');
+            orb.className = 'glowing-orb';
+            orb.style.width = Math.random() * 200 + 100 + 'px';
+            orb.style.height = orb.style.width;
+            orb.style.background = orbColors[Math.floor(Math.random() * orbColors.length)];
+            orb.style.left = Math.random() * 100 + 'vw';
+            orb.style.top = Math.random() * 100 + 'vh';
+            orb.style.animationDelay = Math.random() * 10 + 's';
+            backgroundContainer.appendChild(orb);
+        }
+
+        // Create stars
+        for (let i = 0; i < 100; i++) {
+            const star = document.createElement('div');
+            star.className = 'star';
+            star.style.left = Math.random() * 100 + 'vw';
+            star.style.top = Math.random() * 100 + 'vh';
+            star.style.animationDelay = Math.random() * 4 + 's';
+            backgroundContainer.appendChild(star);
+        }
+
+        // Create aurora effect
+        const aurora = document.createElement('div');
+        aurora.className = 'aurora';
+        backgroundContainer.appendChild(aurora);
+
+        // Animate aurora
+        let gradientPos = 0;
+        setInterval(() => {
+            gradientPos = (gradientPos + 1) % 360;
+            aurora.style.background = `
+                linear-gradient(
+                    ${gradientPos}deg,
+                    rgba(255, 105, 180, 0.1),
+                    rgba(159, 122, 234, 0.1),
+                    rgba(138, 75, 255, 0.1),
+                    rgba(114, 137, 218, 0.1)
+                )
+            `;
+        }, 50);
+    }
+
+    // Initialize when dark mode is active
+    function initDarkBackground() {
+        if (document.body.classList.contains('dark')) {
+            createDarkBackground();
+        }
+    }
+
+    // Add event listener for theme toggle
+    const themeToggle = document.querySelector('.theme-toggle');
+    if (themeToggle) {
+        themeToggle.addEventListener('click', () => {
+            setTimeout(initDarkBackground, 100);
+        });
+    }
+
+    // Initial check
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initDarkBackground);
+    } else {
+        initDarkBackground();
+    }
+})();
+</script>
+
+<style>
+      /* Create a new file: enhanced-dark-background.css */
+
+/* Enhanced Dark Theme Background */
+body.dark {
+    position: relative;
+    background: linear-gradient(135deg, 
+        #0a0a1f 0%,    /* Deep space blue */
+        #1a1a3a 30%,   /* Rich navy */
+        #2d1f3d 70%,   /* Dark purple */
+        #1f1133 100%   /* Deep mystic purple */
+    );
+}
+
+/* Animated Background Elements */
+.dark-theme-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    overflow: hidden;
+}
+
+/* Glowing Orbs */
+.glowing-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(8px);
+    opacity: 0;
+    animation: orbFloat 15s infinite;
+}
+
+/* Starry Night Effect */
+.star {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    background: #fff;
+    border-radius: 50%;
+    animation: twinkle 4s infinite;
+}
+
+/* Aurora Effect */
+.aurora {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    opacity: 0.3;
+    filter: blur(90px);
+    pointer-events: none;
+}
+
+/* Animations */
+@keyframes orbFloat {
+    0% {
+        transform: translate(0, 0) scale(1);
+        opacity: 0;
+    }
+    25% {
+        opacity: 0.3;
+    }
+    50% {
+        transform: translate(
+            ${Math.random() * 100 - 50}px,
+            ${Math.random() * 100 - 50}px
+        ) scale(1.2);
+        opacity: 0.5;
+    }
+    75% {
+        opacity: 0.3;
+    }
+    100% {
+        transform: translate(0, 0) scale(1);
+        opacity: 0;
+    }
+}
+
+@keyframes twinkle {
+    0%, 100% {
+        opacity: 0;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 1;
+        transform: scale(1.5);
+        box-shadow: 0 0 4px #fff,
+                   0 0 8px rgba(255, 105, 180, 0.5);
+    }
+}
+
+/* Container Enhancement for Dark Theme */
+body.dark .container {
+    background: rgba(16, 16, 32, 0.7);
+    border: 1px solid rgba(255, 105, 180, 0.2);
+    box-shadow: 0 8px 32px rgba(255, 105, 180, 0.15);
+    backdrop-filter: blur(12px);
+}
+
+/* Gradient Text Effect */
+body.dark h1,
+body.dark .sparkle-text {
+    background: linear-gradient(120deg, 
+        #ff69b4, /* Pink */
+        #9f7aea, /* Purple */
+        #7eb6ff  /* Light Blue */
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: gradientFlow 8s linear infinite;
+}
+
+@keyframes gradientFlow {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+/* Enhanced Glow Effects */
+body.dark .profile-picture {
+    border: 3px solid transparent;
+    background: linear-gradient(45deg, #ff69b4, #9f7aea) border-box;
+    animation: borderGlow 4s ease-in-out infinite;
+}
+
+@keyframes borderGlow {
+    0%, 100% {
+        box-shadow: 0 0 20px rgba(255, 105, 180, 0.3),
+                   0 0 40px rgba(159, 122, 234, 0.2);
+    }
+    50% {
+        box-shadow: 0 0 30px rgba(255, 105, 180, 0.5),
+                   0 0 60px rgba(159, 122, 234, 0.3);
+    }
+}
+</style>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>✨ Zoya World ✨</title>
@@ -73,8 +300,9 @@
                 <a href="https://discord.gg/6qhkxH2bj9" target="_blank" class="footer-link">Discord</a>!
             </p>
         </div>
-    </footer>
+    </footer>li                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     
     </div>
-    <script src="script.js"></script>
+    <script src="./script.js"></script>
+    <script src="./gaming-effect.js"></script>
 </body>
 </html>
