@@ -2,7 +2,7 @@
 function createBackgroundCards() {
     const container = document.querySelector('.background-animation');
     const cardCount = 15; // Number of floating cards
-
+ 
     for (let i = 0; i < cardCount; i++) {
         const card = document.createElement('div');
         card.className = 'floating-card';
@@ -167,3 +167,4 @@ window.onload = () => {
         greetingElement.style.opacity = "1";
     }, 500);
 };
+
